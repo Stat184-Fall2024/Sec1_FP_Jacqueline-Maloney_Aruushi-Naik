@@ -40,3 +40,4 @@ vignettes/*.pdf
 
 # Dataset
 data/disney_plus_titles.csv
+data/netflix_titles.csv
