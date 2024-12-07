@@ -1,27 +1,29 @@
 ---
-title: "Disney+ Movies and TV Shows Analysis"
-author: "Jacqueline Maloney & Aruushi Naik"
-format: html
+title: "Disney+ and Netflix Movies and TV Shows Analysis"
 editor: visual
+format:
+  pdf:
+    sansfont: "Times Roman"
+    code-fold: true
+    code-link: true
+author: "Jacqueline Maloney & Aruushi Naik"
 ---
 
-## Quarto
+# Trends and Patterns in DisneyPlus and Netflix TV Shows and Movies: A Comparative Analysis 
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+![SARS-CoV-2 Virus](https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg) **Netflix and Disney+** 
 
-## Running Code
+Image Credits - https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+## Introduction 
 
-```{r}
-1 + 1
-```
+Disney+ and Netflix are two of the most popular streaming platforms globally, offering a wide range of TV shows and movies to millions of users. In this analysis, we conduct an exploratory data analysis (EDA) of the movies and TV shows available on Disney+ and Netflix. With the ever-evolving nature of digital entertainment, understanding how trends and patterns in content have shifted over time. 
 
-You can add options to executable code like this
+In this analysis, we will explore key trends in Disney+ and Netflix content, including changes in the number of movies and TV shows over time, average durations, regional production distribution, content ratings, etc.This analysis will offer insights into content strategy, viewer preferences, and platform evolution, helping shape future content decisions and marketing strategies for Disney+ and Netflix.
 
-```{r}
-#| echo: false
-2 * 2
-```
+## The broader research question for our analysis is : 
+#### What trends and patterns can be observed in Disney Plus and Netflix TV shows and movies?
 
-The `echo: false` option disables the printing of code (only output is displayed).
+## Dataset Overview 
+
+
