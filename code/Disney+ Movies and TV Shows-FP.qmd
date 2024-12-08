@@ -9,21 +9,136 @@ format:
 author: "Jacqueline Maloney & Aruushi Naik"
 ---
 
-# Trends and Patterns in DisneyPlus and Netflix TV Shows and Movies: A Comparative Analysis 
+# Trends and Patterns in DisneyPlus and Netflix Movies and TV Shows: A Comparative Analysis 
 
-![SARS-CoV-2 Virus](https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg) **Netflix and Disney+** 
+![Netflix and Disney+](https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg) **Netflix and Disney+** 
 
 Image Credits - https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg
 
 ## Introduction 
 
-Disney+ and Netflix are two of the most popular streaming platforms globally, offering a wide range of TV shows and movies to millions of users. In this analysis, we conduct an exploratory data analysis (EDA) of the movies and TV shows available on Disney+ and Netflix. With the ever-evolving nature of digital entertainment, understanding how trends and patterns in content have shifted over time. 
+Disney+ and Netflix are two of the most well-known streaming services in the world, providing millions of users with access to a vast variety of TV series and films. We conduct an exploratory data analysis (EDA) of the films and television series that are available on Netflix and Disney+ in this analysis. Given the dynamic nature of digital entertainment, knowing how content trends and patterns have changed over time offers important insights regarding platform expansion, production tactics, and consumer preferences.
 
-In this analysis, we will explore key trends in Disney+ and Netflix content, including changes in the number of movies and TV shows over time, average durations, regional production distribution, content ratings, etc.This analysis will offer insights into content strategy, viewer preferences, and platform evolution, helping shape future content decisions and marketing strategies for Disney+ and Netflix.
+Key patterns in Disney+ and Netflix content will be examined in this analysis, such as variations in the number of movies and TV shows over time, average running times, regional production distribution, content ratings, etc.Disney+ and Netflix's future content choices and marketing plans will be influenced by the insights this analysis provides into consumer preferences, strategic planning for content, and platform evolution.
 
 ## The broader research question for our analysis is : 
 #### What trends and patterns can be observed in Disney Plus and Netflix TV shows and movies?
 
 ## Dataset Overview 
+
+To address the research question, we will conduct an in-depth analysis of the Disney+ and Netflix data sets, examining various aspects of the content offered on both platforms.
+
+```{r}
+#| echo: False
+#| message: False
+
+# Load the necessary packages 
+library(dplyr)
+library(tidyr)
+```
+
+```{r}
+#| echo: False
+
+# Load the Disney+ & Netflix data from the provided URL
+disney_url <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2CVS1o_R5Dq-ATuNlVRInKOWHG9O-efVB-pbX6Az6JuS8LJWqC6AqCN2sRFRKelzMCv0CTpEbDJ7l/pub?gid=381939166&single=true&output=csv"
+
+disney_data <- read.csv(disney_url)
+
+netflix_url <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhYpV_lEupTdc9VgHeH2814QtwaoMFJRo3LaAamu7mEh8RuCCXRxRRBPI1AeDHnlqciskbtH8N9xmm/pub?gid=944899422&single=true&output=csv"
+
+netflix_data <- read.csv(netflix_url)
+```
+
+```{r}
+#| echo: False
+
+# Preview Disney+ the data
+#head(disney_data)
+```
+
+```{r}
+#| echo: False
+
+# Preview Netflix the data
+#head(netflix_data)
+```
+The tables above were built using the head() method and display the first few values from the data sets. It provides a quick preview of the data set's structure, column names, and value types, which is important for understanding the data's overall format and content.
+
+```{r}
+#| echo: False
+
+# Summarize Disney+ the data
+#summary(disney_data)
+```
+
+```{r}
+#| echo: False
+
+# Summarize Netflix the data
+#summary(netflix_data)
+```
+
+Additionally, we used the summary() function to create a summary table. Each column in the data data frame is summarized in the table that is shown above.
+
+## Data Cleaning and Wrangling 
+
+To streamline the analysis, the datasets for Disney+ and Netflix were merged into a single dataset. This joining process ensures a consistent structure for comparative analysis and enables efficient exploration of trends across both the platforms.
+```{r}
+#| echo: True 
+
+# Add a platform column to the Disney+ dataset 
+disney_plus <- disney_data %>%
+  mutate(platform = "Disney Plus")
+# Add a platform column to the Netflix dataset
+netflix <- netflix_data %>%
+  mutate(platform = "Netflix")
+# Join the two datasets 
+moviesandtv <- bind_rows(disney_plus, netflix)
+```
+
+Upon looking at the *moviesandtv* dataset, we came across empty cells and decided to replace it with N/A values to account for missing data. This would maintain uniformity throughout the dataset and allow for more accurate analysis by clearly identifying missing information across the Disney+ and Netflix datasets.
+
+```{r}
+#| echo: True 
+
+# Add N/A values to replace missing data 
+moviesandtv <- moviesandtv %>%
+  mutate(across(where(is.character), ~na_if(., "")))
+```
+
+To facilitate targeted analysis for each type of content, we separated the *moviesandtv* dataset into two distinct tables: one for movies and one for TV shows. For movies, we extracted the duration by removing the "min" label, while for TV shows, we converted the number of seasons into integers to ensure clear and specific analysis of content.
+
+```{r}
+#| echo: True 
+
+# Separate the moviesandtv table into two distinct tables 
+
+movies <- moviesandtv %>%
+  filter(type == 'Movie') %>%
+  mutate(duration = as.integer(str_remove(duration, " min")))
+
+tvshows <- moviesandtv %>%
+  filter(type == 'TV Show') %>%
+  mutate(duration = str_replace(duration, "Seasons", "Season")) %>%
+  mutate(duration = as.integer(str_remove(duration, " Season")))
+```
+
+## Exploratory Data Analysis(EDA) 
+
+### How has the number of movies and TV shows changed over the years? 
+
+### What is the average duration of movies and TV shows?
+
+### Which directors are most frequently featured on Disney+?
+
+
+### What is the regional distribution of Disney+ content (based on country/region of production)?
+
+### Is there a trend in content ratings? For instance, does Disney Plus predominantly feature family-friendly content, or is there a growing inclusion of mature-rated titles?
+
+### Outside the US, where are most of Disney+ movies and TV Shows produced?
+
+### Date added to Disney Plus - Are the movies newer to Disney or have been on the platform for a long time?
 
 
