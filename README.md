@@ -26,12 +26,12 @@ We present the guidelines as a checklist in this README. This means that your te
 - [X] Create a repo using this template repo. Name your repo `Sec#_FP_Name1_Name2_Name3` where `Sec#` is your section of Stat184 (i.e., `Sec1`, `Sec2`, `Sec3`, or `Sec4`) and `Name#` is replaced with the names of each team member.
   - [X] The owner of the repo should be `Stat184-Fall2024`. 
 - [X] Make sure that each team member has access to the repo.
-- [ ] Come up with a topic and set of research questions your team will explore.
+- [X] Come up with a topic and set of research questions your team will explore.
 - [X] Make a plan for your work. We suggested putting together your work plan by <mark>Wednesday, Dec. 1, 2024</mark>.
 - [X] Locate appropriate data sources for your project.
   - [X] Your main data source may __not__ be one that we used in class nor be found in any R package.
-  - [ ] Supplementary data sources may come from anywhere.
-- [ ] Read in your data and perform any necessary data wrangling and cleaning.
+  - [X] Supplementary data sources may come from anywhere.
+- [X] Read in your data and perform any necessary data wrangling and cleaning.
 - [ ] Conduct Exploratory Data Analysis.
 - [ ] Prepare a reproducible report.
   - [ ] Use a QMD file; the output type is PDF.
@@ -66,7 +66,7 @@ We present the guidelines as a checklist in this README. This means that your te
   - [ ] __Optional:__ Use the repo's Issues system to track and address any problems, core tasks, etc. 
 - [ ] All code should be written according to a Style Guide of your choice. List this Style Guide as a code comment in your first code chunk.
   - __Possible Style Guides:__ There are several different coding Style Guides you can follow; here are a few. [The BOAST Style Guide](https://educationshinyappteam.github.io/Style_Guide/coding.html), [The Tidyverse Style Guide](https://style.tidyverse.org/), [Google's R Style Guide](https://google.github.io/styleguide/Rguide.html)
-- [ ] Sign up for your Work-in-Progress Presentation
+- [X] Sign up for your Work-in-Progress Presentation
 - [ ] Complete your Work-in-Progress Presentation (details below)
 - [ ] Finalize your work and submit your report as a __PDF__ to the appropriate submission portal in Canvas by the deadline.
   - [ ] As a comment on your submission, include a link to your team's project repo.
