@@ -34,7 +34,7 @@ We present the guidelines as a checklist in this README. This means that your te
 - [X] Read in your data and perform any necessary data wrangling and cleaning.
 - [ ] Conduct Exploratory Data Analysis.
 - [ ] Prepare a reproducible report.
-  - [ ] Use a QMD file; the output type is PDF.
+  - [X] Use a QMD file; the output type is PDF.
   - [ ] The report should be well organized with section headings
   - [ ] Code should __only__ be found in a Code Appendix at the end for a PDF, not in the body of your report.
     - __TIP!__ The following code chunk can be added to a QMD file and will automatically build a section of code.
