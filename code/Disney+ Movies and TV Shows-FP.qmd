@@ -83,7 +83,7 @@ head(netflix_data, 10) %>%
   kable() %>%
   kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
   column_spec(1:12, width = "1cm") %>%  #Adjust column width
-  row_spec(0, bold = TRUE, font_size = 5)%>% # Adjust header font size
+  row_spec(0, bold = TRUE, font_size = 4.5)%>% # Adjust header font size
   kable_styling(font_size = 6) #Modify cell font size
 
 ```
@@ -98,7 +98,7 @@ summary(disney_data) %>%
   kable() %>%
   kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
   column_spec(1:12, width = "1cm") %>%
-  row_spec(0, bold = TRUE, font_size = 5) %>%
+  row_spec(0, bold = TRUE, font_size = 4.5) %>%
   kable_styling(font_size = 6)%>%
   column_spec(1, extra_css = "text-align: left;")
 ```
@@ -192,34 +192,7 @@ head(movies, 10) %>%
 
 ## Exploratory Data Analysis(EDA)
 
-### How many TV shows and movies from a specific year are available on Netflix and Disney+ ? 
-
-```{r}
-# For Tv shows 
-
-# Step 1: Wrangle the TV shows dataset 
-# Filter the dataset to include only TV shows released between 1950 and 2025
-tv_trend <- tvshows %>% 
-  filter(release_year >= 1990 & release_year <= 2025) %>%
-  group_by(platform, release_year) %>% # Group by platform and release year
-  summarise(count = n()) # Count the number of TV shows 
-
-# Step 2: Create the trend line plot
-ggplot(tv_trend, aes(x = release_year, y = count, fill = platform)) +
-  geom_bar(stat = "identity", position = "dodge") + # Create bar plot with grouped bars
-  labs(
-    title = "Trend of TV Shows on Netflix vs. Disney+ Over the Years",
-    x = "Release Year",
-    y = "Number of TV Shows",
-    fill = "Streaming Platforms"
-  ) + # Add titles, labels, and key for the plot
-  scale_fill_manual( # Set custom colors
-    values = c("Disney Plus" = "blue", "Netflix" = "red")
-  ) +
-  theme_minimal() + # Add a clean theme 
-  theme(legend.position = "bottom")  # Positions the legend at the bottom of the plot 
-```
-
+### How has the number of movies and TV shows changed over the years?
 
 ### What is the average duration of movies and TV shows?
 
