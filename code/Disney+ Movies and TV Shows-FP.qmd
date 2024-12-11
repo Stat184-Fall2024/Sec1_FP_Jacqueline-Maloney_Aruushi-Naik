@@ -66,7 +66,7 @@ head(disney_data, 10) %>%
   kable() %>%
   kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
   column_spec(1:12, width = "1cm") %>%  #Adjust column width
-  row_spec(0, bold = TRUE, font_size = 5)%>% # Adjust header font size
+  row_spec(0, bold = TRUE, font_size = 4.5)%>% # Adjust header font size
   kable_styling(font_size = 6) #Modify cell font size
 ```
 
@@ -111,7 +111,7 @@ summary(netflix_data) %>%
   kable() %>%
   kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
   column_spec(1:12, width = "1cm") %>%
-  row_spec(0, bold = TRUE, font_size = 5) %>%
+  row_spec(0, bold = TRUE, font_size = 4.5) %>%
   kable_styling(font_size = 5)%>%
   column_spec(1, extra_css = "text-align: left;")
 ```
@@ -172,7 +172,7 @@ head(tvshows, 10) %>%
   kable() %>%
   kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
   column_spec(1:12, width = "0.95cm") %>%  #Adjust column width
-  row_spec(0, bold = TRUE, font_size = 5)%>% # Adjust header font size
+  row_spec(0, bold = TRUE, font_size = 4.5)%>% # Adjust header font size
   kable_styling(font_size = 5) #Modify cell font size
 ```
 
@@ -186,7 +186,7 @@ head(movies, 10) %>%
   kable() %>%
   kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
   column_spec(1:12, width = "0.95cm") %>%  #Adjust column width
-  row_spec(0, bold = TRUE, font_size = 5)%>% # Adjust header font size
+  row_spec(0, bold = TRUE, font_size = 4.5)%>% # Adjust header font size
   kable_styling(font_size = 5) #Modify cell font size
 ```
 
