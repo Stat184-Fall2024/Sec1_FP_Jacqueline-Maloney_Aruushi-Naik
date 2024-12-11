@@ -192,11 +192,165 @@ head(movies, 10) %>%
 
 ## Exploratory Data Analysis(EDA)
 
-### How has the number of movies and TV shows changed over the years?
+### How many TV shows and movies from a specific year are available on Netflix and Disney+ ? 
+#### TV Shows
+```{r}
+# For TV Shows 
+# Step 1: Wrangle the TV shows dataset 
+# Filter the dataset to include only TV shows released between 1950 and 2025
+tv_trend <- tvshows %>% 
+  filter(release_year >= 1990 & release_year <= 2025) %>%
+  group_by(platform, release_year) %>% # Group by platform and release year
+  summarise(count = n()) # Count the number of TV shows 
+
+# Step 2: Create the trend line plot
+ggplot(tv_trend, aes(x = release_year, y = count, fill = platform)) +
+  geom_bar(stat = "identity", position = "dodge") + # Create bar plot with grouped bars
+  labs(
+    title = "Trend of TV Shows on Netflix vs. Disney+ Over the Years",
+    x = "Release Year",
+    y = "Number of TV Shows",
+    fill = "Streaming Platforms"
+  ) + # Add titles, labels, and key for the plot
+  scale_fill_manual( # Set custom colors
+    values = c("Disney Plus" = "blue", "Netflix" = "red")
+  ) +
+  theme_minimal() + # Add a clean theme 
+  theme(legend.position = "bottom")  # Positions the legend at the bottom of the plot
+```
+#### Movies
+```{r}
+# For Movies 
+# Step 1: Wrangle the Movies dataset 
+# Filter the dataset to include only Movies released between 1950 and 2025
+movie_trend <- movies %>%
+  filter(release_year >= 1990 & release_year <= 2025) %>%
+  group_by(platform, release_year) %>% # Group by platform and release year
+  summarise(count = n()) # Count the number of movies
+
+# Step 2: Create the trend line plot
+ggplot(movie_trend, aes(x = release_year, y = count, fill = platform)) +
+  geom_bar(stat = "identity", position = "dodge") + # Create bar plot with grouped bars
+  labs(
+    title = "Trend of Movies on Netflix vs. Disney+ Over the Years",
+    x = "Release Year",
+    y = "Number of Movies",
+    fill = "Streaming Platforms"
+  ) + # Add titles, labels, and key for the plot
+  scale_fill_manual( # Set custom colors
+    values = c("Disney Plus" = "blue", "Netflix" = "red")
+  ) +
+  theme_minimal()+ # Add a clean theme 
+  theme(legend.position = "bottom")  # Positions the legend at the bottom of the plot  
+```
 
 ### What is the average duration of movies and TV shows?
+#### TV Shows 
+```{r}
+# For TV Shows 
+# Step 1: Wrangle the Movies dataset 
+average_duration_tv <- tvshows %>%
+  group_by(platform) %>% # Group by platform
+  summarise(avg_seasons = mean(duration, na.rm = TRUE)) # Calculate mean number of seasons
+
+# Step 2: Plot the bar plot
+ggplot(average_duration_tv, aes(x = platform, y = avg_seasons, fill = platform)) +
+  geom_bar(stat = "identity", width = 0.5) +  # Bar plot
+  labs(
+    title = "Average Seasons of TV Shows on Netflix vs. Disney+",
+    x = "Platform",
+    y = "Average Number of Seasons"
+  ) + # Add titles, labels, and key for the plot
+  scale_fill_manual(values = c("Disney Plus" = "blue", "Netflix" = "red")) + # Set custom colors
+  theme_minimal() + # Add a clean theme 
+  theme(legend.position = "bottom")  # Positions the legend at the bottom of the plot 
+```
+
+#### Movies
+```{r}
+# For Movies 
+average_duration_movies <- movies %>%
+  group_by(platform) %>% # Group by platform
+  summarise(avg_time = mean(duration, na.rm = TRUE)) #Calculate mean number of seasons
+
+# Step 4: Plot the data
+ggplot(average_duration_movies, aes(x = platform, y = avg_time, fill = platform)) +
+  geom_bar(stat = "identity", width = 0.5) +  # Bar plot
+  labs(
+    title = "Average Time of Movies on Netflix vs. Disney+",
+    x = "Platform",
+    y = "Average Time (mins) of Movies"
+  ) + # Add titles, labels, and key for the plot
+  scale_fill_manual(values = c("Disney Plus" = "blue", "Netflix" = "red")) + # Set custom colors
+  theme_minimal() + # Add a clean theme 
+  theme(legend.position = "bottom")  # Positions the legend at the bottom of the plot 
+```
 
 ### Which directors are most frequently featured on Disney+?
+
+#### TV Shows
+```{r}
+# for tv shows 
+director_data_tv <- tvshows %>%
+  filter(!is.na(director)) %>% # Remove rows with NA in the director column
+  separate_rows(director, sep = ",") %>%
+  group_by(platform, director) %>%
+  summarise(count = n()) # Count the number of appearances
+
+# Step 2: Get the top directors for each platform
+top_directors_tv <- director_data_tv %>%
+  group_by(platform) %>%
+  top_n(10, count) %>% # Select top 10 directors by count
+  ungroup() # Ungroup the data
+
+# Step 3: Plot the data
+ggplot(top_directors_tv, aes(x = reorder(director, count), y = count, fill = platform)) +
+  geom_bar(stat = "identity") + # Bar plot without legend
+  coord_flip() + # Flip coordinates for better readability
+  labs(
+    title = "Top Tv Shows Directors on Disney+ and Netflix",
+    x = "Director",
+    y = "Number of TV Shows",
+    fill = "Streaming Platform"
+  ) + # Add titles, labels, and key for the plot
+  scale_fill_manual( # Set custom colors
+    values = c("Disney Plus" = "blue", "Netflix" = "red")
+  ) + # Set custom colors
+  theme_minimal()+ # Add a clean theme 
+  theme(legend.position = "bottom")  # Positions the legend at the bottom of the plot 
+```
+
+#### Movies 
+```{r}
+# For movies 
+director_data_movies <- movies %>%
+  filter(!is.na(director)) %>%
+  group_by(platform, director) %>% # Group by platform and director
+  summarise(count = n()) # Count the number of appearances
+
+# Step 2: Get the top directors for each platform
+top_directors <- director_data_movies %>%
+  group_by(platform) %>%
+  top_n(10, count) %>% # Select top 10 directors by count
+  ungroup() # Ungroup the data
+
+# Step 3: Plot the data
+ggplot(top_directors, aes(x = reorder(director, count), y = count, fill = platform)) +
+  geom_bar(stat = "identity", show.legend = FALSE) + # Bar plot without legend
+  coord_flip() + # Flip coordinates for better readability
+  labs(
+    title = "Top Movie Directors on Disney+ vs. Netflix",
+    x = "Director",
+    y = "Number of Movies",
+    fill = " Streaming Platform"
+  ) + # Add titles, labels, and key for the plot
+  scale_fill_manual( # Set custom colors
+    values = c("Disney Plus" = "blue", "Netflix" = "red")
+  ) + # Set custom colors
+  theme_minimal() + # Add a clean theme 
+  theme(legend.position = "bottom") # Positions the legend at the bottom of the plot 
+
+```
 
 ### What is the regional distribution of Disney+ content (based on country/region of production)?
 
