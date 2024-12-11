@@ -3,28 +3,29 @@ title: "Disney+ and Netflix Movies and TV Shows Analysis"
 editor: visual
 format:
   pdf:
-    sansfont: "Times Roman"
+    sansfont: "Times New Roman"
     code-fold: true
     code-link: true
 author: "Jacqueline Maloney & Aruushi Naik"
 ---
 
-# Trends and Patterns in DisneyPlus and Netflix Movies and TV Shows: A Comparative Analysis 
+# Trends and Patterns in DisneyPlus and Netflix Movies and TV Shows: A Comparative Analysis
 
-![Netflix and Disney+](https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg) **Netflix and Disney+** 
+![Netflix and Disney+](https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg) **Netflix and Disney+**
 
 Image Credits - https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg
 
-## Introduction 
+## Introduction
 
 Disney+ and Netflix are two of the most well-known streaming services in the world, providing millions of users with access to a vast variety of TV series and films. We conduct an exploratory data analysis (EDA) of the films and television series that are available on Netflix and Disney+ in this analysis. Given the dynamic nature of digital entertainment, knowing how content trends and patterns have changed over time offers important insights regarding platform expansion, production tactics, and consumer preferences.
 
 Key patterns in Disney+ and Netflix content will be examined in this analysis, such as variations in the number of movies and TV shows over time, average running times, regional production distribution, content ratings, etc.Disney+ and Netflix's future content choices and marketing plans will be influenced by the insights this analysis provides into consumer preferences, strategic planning for content, and platform evolution.
 
-## The broader research question for our analysis is : 
+## The broader research question for our analysis is :
+
 #### What trends and patterns can be observed in Disney Plus and Netflix TV shows and movies?
 
-## Dataset Overview 
+## Dataset Overview
 
 To address the research question, we will conduct an in-depth analysis of the Disney+ and Netflix data sets, examining various aspects of the content offered on both platforms.
 
@@ -35,6 +36,9 @@ To address the research question, we will conduct an in-depth analysis of the Di
 # Load the necessary packages 
 library(dplyr)
 library(tidyr)
+library(kableExtra)
+library(stringr)
+library(ggplot2)
 ```
 
 ```{r}
@@ -50,40 +54,74 @@ netflix_url <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhYpV_lEupTdc9V
 netflix_data <- read.csv(netflix_url)
 ```
 
+Disney Data Preview
+
 ```{r}
 #| echo: False
 
-# Preview Disney+ the data
-#head(disney_data)
+# Preview Disney+ (first 10 entries) with truncated text and adjusted font size for the table cells
+head(disney_data, 10) %>%
+  # Truncate character columns
+  mutate(across(where(is.character), ~str_trunc(., width = 15, ellipsis = "..."))) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
+  column_spec(1:12, width = "1cm") %>%  #Adjust column width
+  row_spec(0, bold = TRUE, font_size = 5)%>% # Adjust header font size
+  kable_styling(font_size = 6) #Modify cell font size
 ```
+
+Netflix Data Preview
 
 ```{r}
 #| echo: False
 
 # Preview Netflix the data
-#head(netflix_data)
+# Preview Disney+ (first 10 entries) with truncated text and adjusted font size for the table cells
+head(netflix_data, 10) %>%
+  # Truncate character columns
+  mutate(across(where(is.character), ~str_trunc(., width = 15, ellipsis = "..."))) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
+  column_spec(1:12, width = "1cm") %>%  #Adjust column width
+  row_spec(0, bold = TRUE, font_size = 5)%>% # Adjust header font size
+  kable_styling(font_size = 6) #Modify cell font size
+
 ```
+
 The tables above were built using the head() method and display the first few values from the data sets. It provides a quick preview of the data set's structure, column names, and value types, which is important for understanding the data's overall format and content.
 
 ```{r}
 #| echo: False
 
 # Summarize Disney+ the data
-#summary(disney_data)
+summary(disney_data) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
+  column_spec(1:12, width = "1cm") %>%
+  row_spec(0, bold = TRUE, font_size = 5) %>%
+  kable_styling(font_size = 6)%>%
+  column_spec(1, extra_css = "text-align: left;")
 ```
 
 ```{r}
 #| echo: False
 
 # Summarize Netflix the data
-#summary(netflix_data)
+summary(netflix_data) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
+  column_spec(1:12, width = "1cm") %>%
+  row_spec(0, bold = TRUE, font_size = 5) %>%
+  kable_styling(font_size = 5)%>%
+  column_spec(1, extra_css = "text-align: left;")
 ```
 
 Additionally, we used the summary() function to create a summary table. Each column in the data data frame is summarized in the table that is shown above.
 
-## Data Cleaning and Wrangling 
+## Data Cleaning and Wrangling
 
 To streamline the analysis, the datasets for Disney+ and Netflix were merged into a single dataset. This joining process ensures a consistent structure for comparative analysis and enables efficient exploration of trends across both the platforms.
+
 ```{r}
 #| echo: True 
 
@@ -100,19 +138,19 @@ moviesandtv <- bind_rows(disney_plus, netflix)
 Upon looking at the *moviesandtv* dataset, we came across empty cells and decided to replace it with N/A values to account for missing data. This would maintain uniformity throughout the dataset and allow for more accurate analysis by clearly identifying missing information across the Disney+ and Netflix datasets.
 
 ```{r}
-#| echo: True 
+#| echo: False 
 
 # Add N/A values to replace missing data 
 moviesandtv <- moviesandtv %>%
   mutate(across(where(is.character), ~na_if(., "")))
 ```
 
-To facilitate targeted analysis for each type of content, we separated the *moviesandtv* dataset into two distinct tables: one for movies and one for TV shows. For movies, we extracted the duration by removing the "min" label, while for TV shows, we converted the number of seasons into integers to ensure clear and specific analysis of content.
+To facilitate targeted analysis for each type of content, we separated the *moviesandtv* dataset into two distinct tables: one for movies and one for TV shows. For movies, we changed the format for duration by removing the "min" label, while for TV shows, we converted the number of seasons into integers to ensure clear and specific analysis of content.
 
 ```{r}
-#| echo: True 
+#| echo: False 
 
-# Separate the moviesandtv table into two distinct tables 
+#Separate the moviesandtv table into two distinct tables 
 
 movies <- moviesandtv %>%
   filter(type == 'Movie') %>%
@@ -124,21 +162,170 @@ tvshows <- moviesandtv %>%
   mutate(duration = as.integer(str_remove(duration, " Season")))
 ```
 
-## Exploratory Data Analysis(EDA) 
+TV Shows Data
 
-### How has the number of movies and TV shows changed over the years? 
+```{r}
+#| echo: False 
+head(tvshows, 10) %>%
+  # Truncate character columns
+  mutate(across(where(is.character), ~str_trunc(., width = 15, ellipsis = "..."))) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
+  column_spec(1:12, width = "0.95cm") %>%  #Adjust column width
+  row_spec(0, bold = TRUE, font_size = 5)%>% # Adjust header font size
+  kable_styling(font_size = 5) #Modify cell font size
+```
+
+Movies Data
+
+```{r}
+#| echo: False 
+head(movies, 10) %>%
+  # Truncate character columns
+  mutate(across(where(is.character), ~str_trunc(., width = 15, ellipsis = "..."))) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
+  column_spec(1:12, width = "0.95cm") %>%  #Adjust column width
+  row_spec(0, bold = TRUE, font_size = 5)%>% # Adjust header font size
+  kable_styling(font_size = 5) #Modify cell font size
+```
+
+## Exploratory Data Analysis(EDA)
+
+### How has the number of movies and TV shows changed over the years?
 
 ### What is the average duration of movies and TV shows?
 
 ### Which directors are most frequently featured on Disney+?
 
-
 ### What is the regional distribution of Disney+ content (based on country/region of production)?
 
+```{r}
+#| echo: False
+distribution <- moviesandtv%>%
+  group_by(platform,country)%>%
+  summarise(count = n(), .groups="drop")%>%
+  arrange(desc(count))%>%
+  filter(!is.na(country))%>%
+  slice_head(n=15)
+
+ggplot(distribution, aes(x = reorder(country, count), y = count, fill = platform)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(
+    title = "Regional Distribution of Content on Disney+ and Netflix",
+    x = "Country/Region",
+    y = "Number of Titles",
+    fill = "Platform"
+  )+
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1) ) # Adjust label position
+```
+
+```{r}
+#| echo: False
+
+library(dplyr)
+library(ggplot2)
+
+disney_distribution <- moviesandtv %>%
+  filter(platform == "Disney Plus") %>%
+  group_by(country) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  arrange(desc(count)) %>%
+  filter(!is.na(country)) %>%
+  slice_head(n = 15)
+
+netflix_distribution <- moviesandtv %>%
+  filter(platform == "Netflix") %>%
+  group_by(country) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  arrange(desc(count)) %>%
+  filter(!is.na(country)) %>%
+  slice_head(n = 15)
+
+
+ggplot(disney_distribution, aes(x = reorder(country, count), y = count, fill = "Disney Plus")) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(
+    title = "Regional Distribution of Content on Disney+",
+    x = "Country/Region",
+    y = "Number of Titles",
+    fill = "Platform"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
+  )
+
+
+
+ggplot(netflix_distribution, aes(x = reorder(country, count), y = count, fill = "Netflix")) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(
+    title = "Regional Distribution of Content on Netflix",
+    x = "Country/Region",
+    y = "Number of Titles",
+    fill = "Platform"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
+  )
+
+```
+
 ### Is there a trend in content ratings? For instance, does Disney Plus predominantly feature family-friendly content, or is there a growing inclusion of mature-rated titles?
+
+```{r}
+#| echo: False
+
+disney_ratings <- moviesandtv %>%
+  filter(platform == "Disney Plus") %>%
+  group_by(rating) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  arrange(desc(count))
+
+netflix_ratings <- moviesandtv %>%
+  filter(platform == "Netflix") %>%
+  group_by(rating) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  arrange(desc(count))
+
+ggplot(disney_ratings, aes(x = reorder(rating, count), y = count, fill = "Disney Plus")) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(
+    title = "Content Ratings on Disney Plus",
+    x = "Rating",
+    y = "Number of Titles",
+    fill = "Platform"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
+  )
+
+ggplot(netflix_ratings, aes(x = reorder(rating, count), y = count, fill = "Netflix")) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(
+    title = "Content Ratings on Netflix",
+    x = "Rating",
+    y = "Number of Titles",
+    fill = "Platform"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
+  )
+```
+
+Disney Plus tailors to a younger audience whereas Netflix tailors to teens and young adults.
 
 ### Outside the US, where are most of Disney+ movies and TV Shows produced?
 
 ### Date added to Disney Plus - Are the movies newer to Disney or have been on the platform for a long time?
 
+## Code Appendix
 
+```{r codeAppend, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
+```
