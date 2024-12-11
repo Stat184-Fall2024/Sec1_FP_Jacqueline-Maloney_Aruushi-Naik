@@ -90,6 +90,7 @@ head(netflix_data, 10) %>%
 
 The tables above were built using the head() method and display the first few values from the data sets. It provides a quick preview of the data set's structure, column names, and value types, which is important for understanding the data's overall format and content.
 
+Disney Data Summary
 ```{r}
 #| echo: False
 
@@ -103,6 +104,7 @@ summary(disney_data) %>%
   column_spec(1, extra_css = "text-align: left;")
 ```
 
+Netflix Data Summary
 ```{r}
 #| echo: False
 
@@ -192,8 +194,10 @@ head(movies, 10) %>%
 
 ## Exploratory Data Analysis(EDA)
 
-### How many TV shows and movies from a specific year are available on Netflix and Disney+ ? 
+### How many TV shows and movies from a specific year are available on Netflix and Disney+ ?
+
 #### TV Shows
+
 ```{r}
 # For TV Shows 
 # Step 1: Wrangle the TV shows dataset 
@@ -218,7 +222,9 @@ ggplot(tv_trend, aes(x = release_year, y = count, fill = platform)) +
   theme_minimal() + # Add a clean theme 
   theme(legend.position = "bottom")  # Positions the legend at the bottom of the plot
 ```
+
 #### Movies
+
 ```{r}
 # For Movies 
 # Step 1: Wrangle the Movies dataset 
@@ -245,7 +251,9 @@ ggplot(movie_trend, aes(x = release_year, y = count, fill = platform)) +
 ```
 
 ### What is the average duration of movies and TV shows?
-#### TV Shows 
+
+#### TV Shows
+
 ```{r}
 # For TV Shows 
 # Step 1: Wrangle the Movies dataset 
@@ -267,6 +275,7 @@ ggplot(average_duration_tv, aes(x = platform, y = avg_seasons, fill = platform))
 ```
 
 #### Movies
+
 ```{r}
 # For Movies 
 average_duration_movies <- movies %>%
@@ -289,6 +298,7 @@ ggplot(average_duration_movies, aes(x = platform, y = avg_time, fill = platform)
 ### Which directors are most frequently featured on Disney+?
 
 #### TV Shows
+
 ```{r}
 # for tv shows 
 director_data_tv <- tvshows %>%
@@ -320,7 +330,8 @@ ggplot(top_directors_tv, aes(x = reorder(director, count), y = count, fill = pla
   theme(legend.position = "bottom")  # Positions the legend at the bottom of the plot 
 ```
 
-#### Movies 
+#### Movies
+
 ```{r}
 # For movies 
 director_data_movies <- movies %>%
