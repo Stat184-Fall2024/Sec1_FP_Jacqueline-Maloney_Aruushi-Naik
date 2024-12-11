@@ -195,6 +195,8 @@ head(movies, 10) %>%
 ### How many TV shows and movies from a specific year are available on Netflix and Disney+ ? 
 
 ```{r}
+#| echo: False
+
 # For Tv shows 
 # Step 1: Wrangle the TV shows dataset 
 # Filter the dataset to include only TV shows released between 1950 and 2025
