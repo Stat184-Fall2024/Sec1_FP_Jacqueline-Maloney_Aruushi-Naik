@@ -192,7 +192,34 @@ head(movies, 10) %>%
 
 ## Exploratory Data Analysis(EDA)
 
-### How has the number of movies and TV shows changed over the years?
+### How many TV shows and movies from a specific year are available on Netflix and Disney+ ? 
+
+```{r}
+# For Tv shows 
+
+# Step 1: Wrangle the TV shows dataset 
+# Filter the dataset to include only TV shows released between 1950 and 2025
+tv_trend <- tvshows %>% 
+  filter(release_year >= 1990 & release_year <= 2025) %>%
+  group_by(platform, release_year) %>% # Group by platform and release year
+  summarise(count = n()) # Count the number of TV shows 
+
+# Step 2: Create the trend line plot
+ggplot(tv_trend, aes(x = release_year, y = count, fill = platform)) +
+  geom_bar(stat = "identity", position = "dodge") + # Create bar plot with grouped bars
+  labs(
+    title = "Trend of TV Shows on Netflix vs. Disney+ Over the Years",
+    x = "Release Year",
+    y = "Number of TV Shows",
+    fill = "Streaming Platforms"
+  ) + # Add titles, labels, and key for the plot
+  scale_fill_manual( # Set custom colors
+    values = c("Disney Plus" = "blue", "Netflix" = "red")
+  ) +
+  theme_minimal() + # Add a clean theme 
+  theme(legend.position = "bottom")  # Positions the legend at the bottom of the plot 
+```
+
 
 ### What is the average duration of movies and TV shows?
 
