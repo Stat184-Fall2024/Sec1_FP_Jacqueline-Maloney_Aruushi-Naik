@@ -196,7 +196,6 @@ head(movies, 10) %>%
 
 ```{r}
 # For Tv shows 
-
 # Step 1: Wrangle the TV shows dataset 
 # Filter the dataset to include only TV shows released between 1950 and 2025
 tv_trend <- tvshows %>% 
