@@ -39,6 +39,7 @@ library(tidyr)
 library(kableExtra)
 library(stringr)
 library(ggplot2)
+library(scales)
 ```
 
 ```{r}
@@ -494,9 +495,36 @@ ggplot(ratings, aes(x = reorder(rating, count), y = count, fill = platform)) +
 
 Disney Plus tailors to a younger audience whereas Netflix tailors to teens and young adults.
 
-### Outside the US, where are most of Disney+ movies and TV Shows produced?
+### How does the time between a movie's release and its addition to Disney+ and Netflix vary?
+```{r}
+#| echo: False
 
-### Date added to Disney Plus - Are the movies newer to Disney or have been on the platform for a long time?
+moviesandtv_datechange <- moviesandtv %>%
+  filter(!is.na(date_added), !is.na(release_year), release_year > 2000) %>%
+  mutate(added_year = as.integer(str_trim(str_sub(date_added, -4))))  # Ensure there are no spaces around the year
+
+ggplot(moviesandtv_datechange, aes(x = release_year, y = added_year, color = platform, size = platform)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "grey") +
+  scale_color_manual(values = c("Netflix" = "red", "Disney Plus" = "blue")) +
+  scale_size_manual(values = c("Netflix" = 1, "Disney Plus" = 1.5)) +  # Custom size for each platform
+  labs(
+    title = "Release Year vs. Year Added for Movies and TV Shows",
+    x = "Release Year",
+    y = "Year Added",
+    color = "Platform"
+  ) +
+  scale_y_continuous(labels = label_number(accuracy = 1)) +  # Format y-axis as integers
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),  # Center the title
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "bottom"
+  )+
+  guides(size = "none")
+
+```
+
 
 ## Summary/ Conclusion
 
