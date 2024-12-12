@@ -471,35 +471,17 @@ ggplot(netflix_distribution, aes(x = reorder(country, count), y = count, fill = 
 ```{r}
 #| echo: False
 
-disney_ratings <- moviesandtv %>%
-  filter(platform == "Disney Plus") %>%
-  group_by(rating) %>%
+ratings <- moviesandtv %>%
+  filter(!grepl("min", rating))%>%
+  group_by(platform, rating) %>%
   summarise(count = n(), .groups = "drop") %>%
   arrange(desc(count))
 
-netflix_ratings <- moviesandtv %>%
-  filter(platform == "Netflix") %>%
-  group_by(rating) %>%
-  summarise(count = n(), .groups = "drop") %>%
-  arrange(desc(count))
-
-ggplot(disney_ratings, aes(x = reorder(rating, count), y = count, fill = "Disney Plus")) +
+ggplot(ratings, aes(x = reorder(rating, count), y = count, fill = platform)) +
   geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(values = c("Disney Plus" = "blue", "Netflix" = "red")) +
   labs(
-    title = "Content Ratings on Disney Plus",
-    x = "Rating",
-    y = "Number of Titles",
-    fill = "Platform"
-  ) +
-  theme_minimal() +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
-  )
-
-ggplot(netflix_ratings, aes(x = reorder(rating, count), y = count, fill = "Netflix")) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(
-    title = "Content Ratings on Netflix",
+    title = "Content Ratings on Disney Plus and Netflix",
     x = "Rating",
     y = "Number of Titles",
     fill = "Platform"
