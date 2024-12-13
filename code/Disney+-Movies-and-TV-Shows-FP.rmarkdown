@@ -9,6 +9,8 @@ format:
 author: "Jacqueline Maloney & Aruushi Naik"
 ---
 
+
+
 # Trends and Patterns in Disney+ and Netflix TV Shows and Movies: A Comparative Analysis
 
 ![Netflix and Disney+](https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg) **Netflix and Disney+**
@@ -28,6 +30,8 @@ Key patterns in Disney+ and Netflix content will be examined in this analysis, s
 ## Dataset Overview
 
 To address the research question, we will conduct an in-depth analysis of the Disney+ and Netflix data sets, examining various aspects of the content offered on both platforms.
+
+
 
 ```{r}
 #| echo: False
@@ -55,7 +59,11 @@ netflix_url <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhYpV_lEupTdc9V
 netflix_data <- read.csv(netflix_url)
 ```
 
+
+
 Disney+ Data Preview
+
+
 
 ```{r}
 #| echo: False
@@ -71,7 +79,11 @@ head(disney_data, 10) %>%
   kable_styling(font_size = 6) #Modify cell font size
 ```
 
+
+
 Netflix Data Preview
+
+
 
 ```{r}
 #| echo: False
@@ -89,9 +101,13 @@ head(netflix_data, 10) %>%
 
 ```
 
+
+
 The tables above were built using the head() method and display the first few values from the data sets. It provides a quick preview of the data set's structure, column names, and value types, which is important for understanding the data's overall format and content.
 
 Disney+ Data Summary
+
+
 
 ```{r}
 #| echo: False
@@ -106,7 +122,11 @@ summary(disney_data) %>%
   column_spec(1, extra_css = "text-align: left;")
 ```
 
+
+
 Netflix Data Summary
+
+
 
 ```{r}
 #| echo: False
@@ -121,11 +141,15 @@ summary(netflix_data) %>%
   column_spec(1, extra_css = "text-align: left;")
 ```
 
+
+
 Additionally, we used the summary() function to create a summary table. Each column in the data data frame is summarized in the table that is shown above.
 
 ## Data Cleaning and Wrangling
 
 To streamline the analysis, the datasets for Disney+ and Netflix were merged into a single dataset. This joining process ensures a consistent structure for comparative analysis and enables efficient exploration of trends across both the platforms.
+
+
 
 ```{r}
 #| echo: True 
@@ -140,7 +164,11 @@ netflix <- netflix_data %>%
 moviesandtv <- bind_rows(disney_plus, netflix)
 ```
 
+
+
 Upon looking at the *moviesandtv* dataset, we came across empty cells and decided to replace it with N/A values to account for missing data. This would maintain uniformity throughout the dataset and allow for more accurate analysis by clearly identifying missing information across the Disney+ and Netflix datasets.
+
+
 
 ```{r}
 #| echo: False 
@@ -150,7 +178,11 @@ moviesandtv <- moviesandtv %>%
   mutate(across(where(is.character), ~na_if(., "")))
 ```
 
+
+
 To facilitate targeted analysis for each type of content, we separated the *moviesandtv* dataset into two distinct tables: one for movies and one for TV shows. For movies, we changed the format for duration by removing the "min" label, while for TV shows, we converted the number of seasons into integers to ensure clear and specific analysis of content.
+
+
 
 ```{r}
 #| echo: False 
@@ -167,7 +199,11 @@ tvshows <- moviesandtv %>%
   mutate(duration = as.integer(str_remove(duration, " Season"))) # Remove the string 'Season' and only keep the integer 
 ```
 
+
+
 TV Shows Data
+
+
 
 ```{r}
 #| echo: False 
@@ -181,9 +217,13 @@ head(tvshows, 10) %>%
   kable_styling(font_size = 5) #Modify cell font size
 ```
 
+
+
 The above table showcases the TV Shows dataset which contains data from both the platforms.
 
 Movies Data
+
+
 
 ```{r}
 #| echo: False 
@@ -197,6 +237,8 @@ head(movies, 10) %>%
   kable_styling(font_size = 5) #Modify cell font size
 ```
 
+
+
 The above table showcases the Movies dataset which contains data from both the platforms.
 
 ## Exploratory Data Analysis(EDA)
@@ -204,6 +246,8 @@ The above table showcases the Movies dataset which contains data from both the p
 ### How many TV shows and movies from a specific year are available on Netflix and Disney+ ?
 
 #### TV Shows
+
+
 
 ```{r}
 #| echo: False
@@ -232,9 +276,13 @@ ggplot(tv_trend, aes(x = release_year, y = count, fill = platform)) +
   theme(legend.position = "bottom") # Positions the legend at the bottom of the plot
 ```
 
+
+
 The bar chart illustrates a number of TV series that are accessible on Netflix and Disney+ from each particular year. When it comes to TV shows selection, Netflix constantly outperforms Disney+, especially after the 2000s, which is an indication of its larger selection of TV shows from the year 2000 to 2021. Netflix's content strength is demonstrated its peak at 436 TV shows from the year 2020 alone. Disney+, on the other hand, peaks at 55 TV shows from the year 2021 but still lags behind Netflix. It is interesting to note that Netflix still surpasses Disney+ in 2021 despite a minor decline in TV series from that year. This confirms Netflix's domination in the market by showing that it offers a wider range of TV shows than Disney+.
 
 #### Movies
+
+
 
 ```{r}
 #| echo: False 
@@ -261,11 +309,15 @@ ggplot(movie_trend, aes(x = release_year, y = count, fill = platform)) +
   theme(legend.position = "bottom")  # Positions the legend at the bottom of the plot  
 ```
 
+
+
 The bar chart shows the quantity of films that have been made available on Netflix and Disney+ throughout time. In terms of movie collection, Netflix significantly surpasses Disney+ since 1990. Netflix demonstrates its extensive content library by reaching its pinnacle in 2018 and 2019 movies, with 767 films annually. But after these years, Netflix sees a drop in movie content, much like their TV show patterns. Disney+, in contrast, has a relatively smaller collection of movies, but it has been steadily growing with its content from the recent years, reaching a peak of 74 films from 2020. Netflix's dominance in the movie streaming market is highlighted by this trend, although Disney+ is progressively growing its collection, especially with more recent movies.
 
 ### What is the average duration of movies and TV shows?
 
 #### TV Shows
+
+
 
 ```{r}
 #| echo: False
@@ -289,9 +341,13 @@ ggplot(average_duration_tv, aes(x = platform, y = avg_seasons, fill = platform))
   theme(legend.position = "bottom")  # Positions the legend at the bottom of the plot 
 ```
 
+
+
 The average number of seasons for Netflix and Disney+ TV series is compared in the plot. It illustrates that, in contrast to Netflix, which normally offers shows with fewer than two seasons, Disney+ usually offers shows with a greater average number of seasons - 2 or more. Disney+'s emphasis on family-friendly franchises like Marvel, Star Wars, Pixar, and Disney Channel series—which frequently have several seasons to appeal to younger viewers who prefer longer-running series—is in line with this trend. Netflix, on the other hand, appeals to a wider audience, including elderly viewers who might like short stories, by offering a varied mix of original content and shorter series.
 
 #### Movies
+
+
 
 ```{r}
 #| echo: False
@@ -315,11 +371,15 @@ ggplot(average_duration_movies, aes(x = platform, y = avg_time, fill = platform)
   theme(legend.position = "bottom")  # Positions the legend at the bottom of the plot 
 ```
 
+
+
 The plot compares with the average running times of Netflix and Disney+ films. It demonstrates that the average runtime of Netflix films is higher i.e. 99 minutes than that of Disney+ films i.e. 71 minutes. This variation can be explained by Netflix's emphasis on a wide variety of movies, including highly regarded, award-winning productions which typically entail lengthier running periods. Furthermore, Netflix offers a greater selection of adult-oriented live-action movies, which are usually lengthier in length. Disney+, on the other hand, concentrates more on animation and franchise films aimed at younger audiences, which are typically shorter in order to keep viewers' attention spans intact. The two platforms' different target audiences and content strategies are reflected in this trend.
 
 ### Which directors are most frequently featured on Disney+?
 
 #### TV Shows
+
+
 
 ```{r}
 #| echo: False
@@ -353,9 +413,13 @@ ggplot(top_directors_tv, aes(x = reorder(director, count), y = count, fill = pla
   theme(legend.position = "bottom")  # Positions the legend at the bottom of the plot 
 ```
 
+
+
 The top ten TV show directors on Netflix and Disney+ can be seen in the graph. Given that Disney+ has no directors included in the data set (only "NA" values are present), it is evident from the plot that all of the top directors in the graph are connected to Netflix. With three TV shows each available on Netflix, directors Ken Burns and Alastair Fothergill are clearly the most significant contributors. This implies that Netflix features a wider variety of content from a wider spectrum of directors. A data set restriction in the Disney+ data set is the reason for the lack of directors for Disney+.
 
 #### Movies
+
+
 
 ```{r}
 #| echo: False
@@ -388,9 +452,13 @@ ggplot(top_directors, aes(x = reorder(director, count), y = count, fill = platfo
 
 ```
 
+
+
 The top ten film directors on Netflix and Disney+ are shown in the graph. It shows that Rajiv Chilaka, whose 19 films are available on Netflix, is Netflix's main dominator. On the other side, Jack Hanna is in charge of Disney+, which offers 17 films that he has directed. This demonstrates a considerable difference between the movie selections on the two platforms, with Netflix displaying a greater number of Chilaka-directed productions. Hanna makes a substantial contribution to Disney+. The plot emphasizes how different the kinds of films that are available on each platform are, with Netflix providing a wider selection of filmmakers and genres.
 
 ### What is the regional distribution of Disney+ content (based on country/region of production)?
+
+
 
 ```{r}
 #| echo: False
@@ -467,7 +535,11 @@ ggplot(netflix_distribution, aes(x = reorder(country, count), y = count, fill = 
 
 ```
 
+
+
 ### Is there a trend in content ratings? For instance, does Disney Plus predominantly feature family-friendly content, or is there a growing inclusion of mature-rated titles?
+
+
 
 ```{r}
 #| echo: False
@@ -493,9 +565,13 @@ ggplot(ratings, aes(x = reorder(rating, count), y = count, fill = platform)) +
   )
 ```
 
+
+
 Disney Plus tailors to a younger audience whereas Netflix tailors to teens and young adults.
 
 ### How does the time between a movie's release and its addition to Disney+ and Netflix vary?
+
+
 ```{r}
 #| echo: False
 
@@ -526,6 +602,8 @@ ggplot(moviesandtv_datechange, aes(x = release_year, y = added_year, color = pla
 ```
 
 
+
+
 ## Summary/ Conclusion
 
 This report examines the content data sets from Netflix and Disney+ to identify key trends and differences in their TV shows and movie offerings. The data sets include seasons of TV series, average runtimes of movies, the number of TV series and films available from various years, and the contributions of the best directors on each platform. 
@@ -547,5 +625,8 @@ These observations draw attention to the unique strategies used by Netflix and D
 
 ## Code Appendix
 
+
+
 ```{r codeAppend, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
 ```
+
