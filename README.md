@@ -36,7 +36,7 @@ We present the guidelines as a checklist in this README. This means that your te
 - [ ] Prepare a reproducible report.
   - [X] Use a QMD file; the output type is PDF.
   - [ ] The report should be well organized with section headings
-  - [ ] Code should __only__ be found in a Code Appendix at the end for a PDF, not in the body of your report.
+  - [X] Code should __only__ be found in a Code Appendix at the end for a PDF, not in the body of your report.
     - __TIP!__ The following code chunk can be added to a QMD file and will automatically build a section of code.
 ````
       ```{r codeAppend, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
