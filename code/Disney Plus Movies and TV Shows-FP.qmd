@@ -11,9 +11,7 @@ author: "Jacqueline Maloney & Aruushi Naik"
 
 # Trends and Patterns in Disney+ and Netflix TV Shows and Movies: A Comparative Analysis
 
-![Netflix and Disney+](https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg) **Netflix and Disney+**
-
-Image Credits - https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg
+![Netflix and Disney+](https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg)
 
 ## Introduction
 
@@ -558,6 +556,16 @@ This report examines the content data sets from Netflix and Disney+ to identify 
 These observations draw attention to the unique strategies used by Netflix and Disney+ to reach their target markets and expand their libraries. As Netflix and Disney+ provide service and content for different audiences it becomes difficult to determine which platform is better. It is clear that Disney+ is designed for younger viewers and Netflix is more for older but also provides younger content. After making comparison of of the platforms and content we can see that Netflix seems to be the larger more board platform. It contains more titles, a variety of ratings, locations, and directors across all their content. Both platforms are great streaming services and more so depend on what the audience is looking for in a platform.
 
 ## References
+
+#### Image Reference: 
+
+"Netflix vs Disney Plus." *Gamerant*. Accessed 14 Dec. 2024. [static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg](https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg)
+
+#### Website References:
+
+Bansal, Shivam. “Netflix Movies and TV Shows.” *Kaggle*, 27 Sept. 2021, [www.kaggle.com/datasets/shivamb/netflix-shows](https://www.kaggle.com/datasets/shivamb/netflix-shows). Accessed 14 Dec. 2024.
+
+Bansal, Shivam. “Netflix Movies and TV Shows.” *Kaggle*, 27 Sept. 2021, [www.kaggle.com/datasets/shivamb/netflix-shows](https://www.kaggle.com/datasets/shivamb/netflix-shows). Accessed 14 Dec. 2024.
 
 ## Code Appendix
 
