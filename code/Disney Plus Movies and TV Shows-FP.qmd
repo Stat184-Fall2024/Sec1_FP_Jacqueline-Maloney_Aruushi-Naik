@@ -396,96 +396,82 @@ The top ten film directors on Netflix and Disney+ are shown in the graph. It sho
 #| echo: False
 #| message: False
 
-#
+# What is the regional distribution of Disney+ content (based on country/region of production)?
 
-distribution <- moviesandtv%>%
-  group_by(platform,country)%>%
-  summarise(count = n(), .groups="drop")%>%
-  arrange(desc(count))%>%
-  filter(!is.na(country))%>%
-  slice_head(n=15)
-
-ggplot(distribution, aes(x = reorder(country, count), y = count, fill = platform)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(
-    title = "Regional Distribution of Content on Disney+ and Netflix",
-    x = "Country/Region",
-    y = "Number of Titles",
-    fill = "Platform"
-  )+
-  theme_minimal() +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1) ) # Adjust label position
-```
-
-```{r}
-#| echo: False
-
-library(dplyr)
-library(ggplot2)
-
+#Step 1: Wrangle the data to select Disney+ and sort by country of production
 disney_distribution <- moviesandtv %>%
-  filter(platform == "Disney Plus") %>%
+  filter(platform == "Disney Plus") %>% #filter only Disney Plus entries
+  separate_rows(country, sep = ", ") %>% #Separate the list of country entries by the comma and space
   group_by(country) %>%
   summarise(count = n(), .groups = "drop") %>%
   arrange(desc(count)) %>%
-  filter(!is.na(country)) %>%
-  slice_head(n = 15)
+  filter(!is.na(country) & country != "United States") %>% #remove NA values and not include United States in our data
+  slice_head(n = 15) #Select only the top 15 production countries
 
+#Step 2: Wrangle the data to select Netflix and sort by country of production
 netflix_distribution <- moviesandtv %>%
-  filter(platform == "Netflix") %>%
+  filter(platform == "Netflix") %>% #filter only Netflix entries
+  separate_rows(country, sep = ", ") %>% #Separate the list of country entries by the comma and space
   group_by(country) %>%
   summarise(count = n(), .groups = "drop") %>%
   arrange(desc(count)) %>%
-  filter(!is.na(country)) %>%
-  slice_head(n = 15)
+  filter(!is.na(country) & country != "United States") %>% #remove NA values and not include United States in our data
+  slice_head(n = 15) #Select only the top 15 production countries
 
-
+#Step 3: Create a bar graph displaying the regional distribution for Disney+
 ggplot(disney_distribution, aes(x = reorder(country, count), y = count, fill = "Disney Plus")) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(
+  geom_bar(stat = "identity", position = "dodge", show.legend = FALSE) + #creates a bar graph with the legend hidden
+  labs( #provides title and axis labels
     title = "Regional Distribution of Content on Disney+",
     x = "Country/Region",
     y = "Number of Titles",
     fill = "Platform"
   ) +
+  scale_fill_manual(values = c("blue")) + #display the data in blue for Disney+
   theme_minimal() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1) #adjust the y axis content to be positioned on an angle
   )
 
-
-
+#Step 3: Create a bar graph displaying the regional distribution for Netflix
 ggplot(netflix_distribution, aes(x = reorder(country, count), y = count, fill = "Netflix")) +
-  geom_bar(stat = "identity", position = "dodge") +
-  labs(
+  geom_bar(stat = "identity", position = "dodge", show.legend = FALSE) + #creates a bar graph with the legend hidden
+  labs( #provides title and axis labels
     title = "Regional Distribution of Content on Netflix",
     x = "Country/Region",
     y = "Number of Titles",
     fill = "Platform"
   ) +
+  scale_fill_manual(values = c("red")) + #display the data in red for Netflix
   theme_minimal() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1) #adjust the y axis content to be positioned on an angle
   )
 
 ```
+These two plots display the regional distribution for Disney+ and Netflix. We are able to determine which locations are most population for production of TV shows and movies for each streaming service. As the United States was determined to be the most popular amongst all platforms we did not include it in our plots in order to have a better visual of the other regions. We are able to determine that Disney+ does most of its work in the UK and Canada with Australia trailing behind by over 50 titles. Netflix primary works with India and the UK. Canada is a close third but way far behind. The largest difference to note is how much wider of a network Netflix has compared to Disney+. With being a much larger streaming platform, India has been a location for over 1000 titles whereas Disney+'s top location only is around 100. The distribution is relatively similar with similar regions being more popular for production than others.
+
 
 ### Is there a trend in content ratings? For instance, does Disney Plus predominantly feature family-friendly content, or is there a growing inclusion of mature-rated titles?
 
 ```{r}
 #| echo: False
+#| message: False
 
+# Is there a trend in content ratings? For instance, does Disney Plus predominantly feature family-friendly content, or is there a growing inclusion of mature-rated titles?
+
+#Step 1: Wrangle the moviesandtv dataset to analyze the ratings with their count
 ratings <- moviesandtv %>%
-  filter(!grepl("min", rating))%>%
-  group_by(platform, rating) %>%
+  filter(!grepl("min", rating))%>% #removed random values in ratings containing "min" entries
+  group_by(platform, rating) %>% #group the data to display both Netflix and Disney+ and then count the ratings
   summarise(count = n(), .groups = "drop") %>%
   arrange(desc(count))
 
+#Step 2: Create a bar plot displaying ratings and their count for both Netflix and Disney+
 ggplot(ratings, aes(x = reorder(rating, count), y = count, fill = platform)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  scale_fill_manual(values = c("Disney Plus" = "blue", "Netflix" = "red")) +
-  labs(
+  geom_bar(stat = "identity", position = "dodge") + #creates a bar graph
+  scale_fill_manual(values = c("Disney Plus" = "blue", "Netflix" = "red")) + #fills the bars with blue for Disney+ and red for Netflix
+  labs( #provides title, axis labels, and legend
     title = "Content Ratings on Disney Plus and Netflix",
     x = "Rating",
     y = "Number of Titles",
@@ -493,42 +479,47 @@ ggplot(ratings, aes(x = reorder(rating, count), y = count, fill = platform)) +
   ) +
   theme_minimal() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1)
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1) #adjust the y axis content to be positioned on an angle
   )
 ```
 
-Disney Plus tailors to a younger audience whereas Netflix tailors to teens and young adults.
+Disney Plus tailors to a younger audience whereas Netflix tailors to teens and young adults. As seen in our plot, Netflix has dignificantly more movies and tv shows that are rated for young adults and adults. Both TV-MA and R Netflix contains many titles while Disney+ seems to not even contain any. Looking closely at the child and family freindly ratings, Disney+ has more if its popularity within PG and TV-G. Netflix also has titles with these ratings but as it is a larger streaming service less than 500 is very minimal compared to over 3000 TV-MA titles. Disney+ is drawing a younger less mature audience so it is catering to that by provdiing more age apropirate shows and movies. Netflix has the young adult and adult audience so it tailors its titles more towards this older audience.
 
 ### How does the time between a movie's release and its addition to Disney+ and Netflix vary?
 
 ```{r}
 #| echo: False
+#| message: False
 
+# How does the time between a movie's release and its addition to Disney+ and Netflix vary?
+
+#Step 1: Wrangle the dataset so that the date_added is a integer of the year and not a string of the date
 moviesandtv_datechange <- moviesandtv %>%
-  filter(!is.na(date_added), !is.na(release_year), release_year > 2000) %>%
-  mutate(added_year = as.integer(str_trim(str_sub(date_added, -4))))  # Ensure there are no spaces around the year
+  filter(!is.na(date_added), !is.na(release_year), release_year > 2000) %>% #filters out any NA values and sets release year to be above 2000
+  mutate(added_year = as.integer(str_trim(str_sub(date_added, -4)))) #mutates the table to display the year of the date added as just the year in an integer
 
+#Step 2: Create a plot displaying the correlation between the year releasted and year added to both streaming platforms
 ggplot(moviesandtv_datechange, aes(x = release_year, y = added_year, color = platform, size = platform)) +
-  geom_point() +
-  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "grey") +
-  scale_color_manual(values = c("Netflix" = "red", "Disney Plus" = "blue")) +
-  scale_size_manual(values = c("Netflix" = 1, "Disney Plus" = 1.5)) +  # Custom size for each platform
-  labs(
+  geom_point() + #Creates a scatter plot with both Disney+ and Netflix data
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "grey") + #This is reference line showing year released = year added
+  scale_color_manual(values = c("Netflix" = "red", "Disney Plus" = "blue")) + #setting Netflix points to be red and Disney+ to be blue
+  scale_size_manual(values = c("Netflix" = 1, "Disney Plus" = 2)) +  # Custom size for each platform so both are visible
+  labs( #provides title, axis labels, and legend
     title = "Release Year vs. Year Added for Movies and TV Shows",
     x = "Release Year",
     y = "Year Added",
     color = "Platform"
   ) +
-  scale_y_continuous(labels = label_number(accuracy = 1)) +  # Format y-axis as integers
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5),  # Center the title
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "bottom"
+    legend.position = "bottom" #position the legend on the bottom of the plot
   )+
-  guides(size = "none")
+  guides(size = "none") #removes the second legend displaying size as a key
 
 ```
+In comparing movies and tv shows release year to the year they are added to streaming platforms it seems that newer films are being added much faster to streaming platforms. The grey dashed line is a reference line showing where release year = year added. With the exception of some outliers below the line from incorrect data input we can see many films added after their year of release. The graph starts in 2000 as Netflix was not founded until 1997 and Disney+ in 2019. It is interesting to see how with time more titles seem to be added much quicker. Looking at titles from the early 2000s, most were not added to Netflix until 2016 or later. Looking at more recent titles from 2015 to 2021 are being added right after production or within a year or two. Now that both these streaming platforms have been around for a little while we are able to see that there are plenty of movies and shows being added to the platforms within the same year of release as shown on the reference line.
+
 
 ## Summary/ Conclusion
 
