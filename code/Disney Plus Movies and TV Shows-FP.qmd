@@ -55,7 +55,7 @@ netflix_url <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhYpV_lEupTdc9V
 netflix_data <- read.csv(netflix_url)
 ```
 
-Disney+ Data Preview
+**Disney+ Data Preview**
 
 ```{r}
 #| echo: False
@@ -71,7 +71,7 @@ head(disney_data, 10) %>%
   kable_styling(font_size = 6) #Modify cell font size
 ```
 
-Netflix Data Preview
+**Netflix Data Preview**
 
 ```{r}
 #| echo: False
@@ -91,7 +91,7 @@ head(netflix_data, 10) %>%
 
 The tables above were built using the head() method and display the first few values from the data sets. It provides a quick preview of the data set's structure, column names, and value types, which is important for understanding the data's overall format and content.
 
-Disney+ Data Summary
+**Disney+ Data Summary**
 
 ```{r}
 #| echo: False
@@ -106,7 +106,7 @@ summary(disney_data) %>%
   column_spec(1, extra_css = "text-align: left;")
 ```
 
-Netflix Data Summary
+**Netflix Data Summary**
 
 ```{r}
 #| echo: False
@@ -167,7 +167,7 @@ tvshows <- moviesandtv %>%
   mutate(duration = as.integer(str_remove(duration, " Season"))) # Remove the string 'Season' and only keep the integer 
 ```
 
-TV Shows Data
+**TV Shows Data**
 
 ```{r}
 #| echo: False 
@@ -183,7 +183,7 @@ head(tvshows, 10) %>%
 
 The above table showcases the TV Shows dataset which contains data from both the platforms.
 
-Movies Data
+**Movies Data**
 
 ```{r}
 #| echo: False 
@@ -203,7 +203,7 @@ The above table showcases the Movies dataset which contains data from both the p
 
 #### How many TV shows and movies from a specific year are available on Netflix and Disney+ ?
 
-TV Shows
+**TV Shows**
 
 ```{r}
 #| echo: False
@@ -236,7 +236,7 @@ ggplot(tv_trend, aes(x = release_year, y = count, fill = platform)) +
 
 The bar chart illustrates a number of TV series that are accessible on Netflix and Disney+ from each particular year. When it comes to TV shows selection, Netflix constantly outperforms Disney+, especially after the 2000s, which is an indication of its larger selection of TV shows from the year 2000 to 2021. Netflix's content strength is demonstrated its peak at 436 TV shows from the year 2020 alone. Disney+, on the other hand, peaks at 55 TV shows from the year 2021 but still lags behind Netflix. It is interesting to note that Netflix still surpasses Disney+ in 2021 despite a minor decline in TV series from that year. This confirms Netflix's domination in the streaming industry by showing that it offers a wider range of TV shows than Disney+.
 
-Movies
+**Movies**
 
 ```{r}
 #| echo: False 
@@ -269,7 +269,7 @@ The bar chart shows the quantity of films that have been made available on Netfl
 
 #### What is the average duration of movies and TV shows?
 
-TV Shows
+**TV Shows**
 
 ```{r}
 #| echo: False
@@ -297,7 +297,7 @@ ggplot(average_duration_tv, aes(x = platform, y = avg_seasons, fill = platform))
 
 The average number of seasons for Netflix and Disney+ TV series is compared in the plot. It illustrates that, in contrast to Netflix, which normally offers shows with fewer than two seasons, Disney+ usually offers shows with a greater average number of seasons - 2 or more. Disney+'s emphasis on family-friendly franchises like Marvel, Star Wars, Pixar, and Disney Channel series, which frequently have several seasons to appeal to younger viewers who prefer longer-running series, is in line with this trend. Netflix, on the other hand, appeals to a wider audience, including elderly viewers who might like short stories, by offering a varied mix of original content and shorter series.
 
-Movies
+**Movies**
 
 ```{r}
 #| echo: False
@@ -327,7 +327,7 @@ The plot compares with the average running times of Netflix and Disney+ films. I
 
 #### Which directors are most frequently featured on Disney+?
 
-TV Shows
+**TV Shows**
 
 ```{r}
 #| echo: False
@@ -365,7 +365,7 @@ ggplot(top_directors_tv, aes(x = reorder(director, count), y = count, fill = pla
 
 The top ten TV show directors on Netflix and Disney+ can be seen in the graph. Given that Disney+ has no directors included in the data set (only "NA" values are present), it is evident from the plot that all of the top directors in the graph are connected to Netflix. With three TV shows each available on Netflix, directors Ken Burns and Alastair Fothergill are clearly the most significant contributors. This implies that Netflix features a wider variety of content from a wider spectrum of directors. A data set restriction in the Disney+ data set is the reason for the lack of directors for Disney+.
 
-Movies
+**Movies**
 
 ```{r}
 #| echo: False
@@ -558,7 +558,6 @@ These observations draw attention to the unique strategies used by Netflix and D
 ## References
 
 #### Image Reference:
-
 "Netflix vs Disney Plus." *Gamerant*. Accessed 14 Dec. 2024. [static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg](https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg)
 
 #### Website References:
