@@ -425,13 +425,15 @@ ggplot(top_directors, aes(x = reorder(director, count), y = count, fill = platfo
 The top ten film directors on Netflix and Disney+ are shown in the graph. It shows that Rajiv Chilaka, whose 19 films are available on Netflix, is Netflix's main dominator. On the other side, Jack Hanna is in charge of Disney+, which offers 17 films that he has directed. This demonstrates a considerable difference between the movie selections on the two platforms, with Netflix displaying a greater number of Chilaka-directed productions. Hanna makes a substantial contribution to Disney+. The plot emphasizes how different the kinds of films that are available on each platform are, with Netflix providing a wider selection of filmmakers and genres.
 
 \newpage
-#### What is the regional distribution of Disney+ content (based on country/region of production)?
+#### What is the regional distribution of Disney+ and Netflix content (based on country/region of production)?
 
 ```{r}
 #| echo: False
 #| message: False
+#| fig-cap: 
+#| - "Regional Distribution of Disney+ and Netflix Content"
 
-# What is the regional distribution of Disney+ content (based on country/region of production)?
+# What is the regional distribution of Disney+ and Netflix  content (based on country/region of production)?
 
 #Step 1: Wrangle the data to select Disney+ and sort by country of production
 disney_distribution <- moviesandtv %>%
@@ -487,7 +489,6 @@ ggplot(netflix_distribution, aes(x = reorder(country, count), y = count, fill = 
 
 ```
 
-\newpage
 These two plots display the regional distribution for Disney+ and Netflix. We are able to determine which locations are most population for production of TV shows and movies for each streaming service. As the United States was determined to be the most popular amongst all platforms, we did not include it in our plots in order to have a better visual of the other regions. We are able to determine that Disney+ does most of its work in the UK and Canada with Australia trailing behind by over 50 titles. Netflix primary works with India and the UK. Canada is a close third but way far behind. The largest difference to note is how much wider of a network Netflix has compared to Disney+. With being a much larger streaming platform, India has been a location for over 1000 titles whereas Disney+'s top location only is around 100. The distribution is relatively similar with similar regions being more popular for production than others.
 
 \newpage
@@ -496,6 +497,8 @@ These two plots display the regional distribution for Disney+ and Netflix. We ar
 ```{r}
 #| echo: False
 #| message: False
+#| fig-cap: 
+#| - "Comparison of Content Ratings of Disney+ and Netflix"
 
 # Is there a trend in content ratings? For instance, does Disney Plus predominantly feature family-friendly content, or is there a growing inclusion of mature-rated titles?
 
@@ -532,6 +535,8 @@ Disney Plus tailors to a younger audience whereas Netflix tailors to teens and y
 ```{r}
 #| echo: False
 #| message: False
+#| fig-cap: 
+#| - "Comparison of Release Year to Year Added to Netflix and Disney+"
 
 # How does the time between a movie's release and its addition to Disney+ and Netflix vary?
 
