@@ -565,3 +565,42 @@ ggplot(moviesandtv_datechange, aes(x = release_year, y = added_year, color = pla
   guides(size = "none") #removes the second legend displaying size as a key
 
 ```
+
+In comparing movies and tv shows release year to the year they are added to streaming platforms it seems that newer films are being added much faster to streaming platforms. The grey dashed line is a reference line showing where release year = year added. With the exception of some outliers below the line from incorrect data input we can see many films added after their year of release. The graph starts in 2000 as Netflix was not founded until 1997 and Disney+ in 2019. Both platforms have provided a variety of content from many years dating back to the 1900s as well (not provided in the graph). Also, it is interesting to see how with time more titles seem to be added much quicker. Looking at titles from the early 2000s, most were not added to Netflix until 2016 or later. Looking at more recent titles from 2015 to 2021 are being added right after production or within a year or two. Now that both these streaming platforms have been around for a little while we are able to see that there are plenty of movies and shows being added to the platforms within the same year of release as shown on the reference line.
+
+\newpage
+## Summary/ Conclusion
+
+This report examines the content data sets from Netflix and Disney+ to identify key trends and differences in their TV shows and movie offerings. The data sets include seasons of TV series, average runtimes of movies, the number of TV series and films available from various years, and the contributions of the best directors on each platform. A brief overview of the platforms' growth trends and content strategy is as follows:
+
+1.  Content Availability: Netflix constantly outperforms Disney+ in terms of TV shows and movies, with the highest performance in 2020 and 2018–2019. Disney+ continues to expand steadily, reaching a peak in 2021, but its volume still lags behind that of Netflix. Netflix still dominates the market even though it saw a slight decline after reaching its peak. However, Disney+ shows a determined effort to increase the quantity of its library.
+
+2.  Content Characteristics: Disney+ emphasizes family-friendly, multi-season TV franchises and shorter animated films, while Netflix offers diverse, shorter TV series and longer, live-action films. This is an indication of the platforms' different approaches, with Netflix aiming for a wider, more diverse audience and Disney+ targeting younger audiences and families.
+
+3.  Directorial Influence: Netflix showcases a broader variety of directors across TV shows and movies, led by Rajiv Chilaka, while Disney+ highlights Jack Hanna's contributions. Netflix's diverse range of directors underscores its extensive and varied content offerings.
+
+4.  Regional Distribution: Excluding the United States, the UK and Canada are two of the top locations for both Disney+ and Netflix. The UK is Disney+'s top while India is the top location for Netflix. Generally, many of the same locations are utilized across the board for both platforms when producing content.
+
+5.  Ratings: While Netflix has R and TV-MA rated content Disney+ is not seen to contain any titles in that rating. It can be concluded that Netflix is catering to an older more mature audience. Disney+ is more focused on the younger and family friendly audience producing mostly G, PG, and TV-G content.
+
+6.  Release Year vs. Year Added: It is more common today to see movies and tv shows being added to streaming platforms within the first year or two of release. Many of the titles from the year 2000s were not added to Netflix until the later in. Netflix came out in 1977 and Disney+ in 2019. Both platforms added a variety of content dating back to years ago including in the 1900s. Additionally Netflix and Disney+ more recently started added content within the same year or within a year of release.
+
+These observations draw attention to the unique strategies used by Netflix and Disney+ to reach their target markets and expand their libraries. As Netflix and Disney+ provide service and content for different audiences it becomes difficult to determine which platform is better. It is clear that Disney+ is designed for younger viewers and Netflix is more for older but also provides younger content. After making comparison of of the platforms and content we can see that Netflix seems to be the larger more board platform. It contains more titles, a variety of ratings, locations, and directors across all their content. Both platforms are great streaming services and more so depend on what the audience is looking for in a platform.
+
+\newpage
+## References
+
+#### Image Reference:
+"Netflix vs Disney Plus." *Gamerant*. Accessed 14 Dec. 2024. [static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg](https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/08/Netflix-vs-Disney-Plus.jpg)
+
+#### Website References:
+
+Bansal, Shivam. “Netflix Movies and TV Shows.” *Kaggle*, 27 Sept. 2021, [www.kaggle.com/datasets/shivamb/netflix-shows](https://www.kaggle.com/datasets/shivamb/netflix-shows). Accessed 14 Dec. 2024.
+
+Bansal, Shivam. “Netflix Movies and TV Shows.” *Kaggle*, 27 Sept. 2021, [www.kaggle.com/datasets/shivamb/netflix-shows](https://www.kaggle.com/datasets/shivamb/netflix-shows). Accessed 14 Dec. 2024.
+
+\newpage
+## Code Appendix
+
+```{r codeAppend, ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
+```
