@@ -78,7 +78,7 @@ head(disney_data, 10) %>%
 ```{r}
 #| echo: False
 
-# Preview Netflix the data
+# Preview the Netflix data
 # Preview Disney+ (first 10 entries) with truncated text and adjusted font size for the table cells
 head(netflix_data, 10) %>%
   # Truncate character columns
@@ -98,7 +98,7 @@ The tables above were built using the head() method and display the first few va
 ```{r}
 #| echo: False
 
-# Summarize Disney+ the data
+# Summarize the Disney+ data
 summary(disney_data) %>%
   kable() %>%
   kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
@@ -114,7 +114,7 @@ summary(disney_data) %>%
 ```{r}
 #| echo: False
 
-# Summarize Netflix the data
+# Summarize the Netflix data
 summary(netflix_data) %>%
   kable() %>%
   kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
